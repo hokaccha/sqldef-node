@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "@sqldef/workspace",
+  "scripts": {
+    "test": "npm run test --workspaces"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.3",
+    "vitest": "^1.4.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "author": "hokaccha",
+  "license": "MIT"
+}

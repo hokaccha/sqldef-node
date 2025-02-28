@@ -14,7 +14,7 @@
     "lint:eslint": "eslint .",
     "lint:tsc": "npm run lint:tsc --workspaces",
     "format": "prettier --write .",
-    "download": "tsx libs/sqldef-downloader/download-sqldef.ts"
+    "download": "tsx libs/sqldef-downloader"
   },
   "keywords": [
     "sqldef",

@@ -71,14 +71,19 @@ export type ExportOptions = BaseOptions;
  * Execute sqldef command
  * @param command Command to execute
  * @param args Command arguments
+ * @param desiredSql SQL schema to apply (optional)
  * @returns Promise that resolves with stdout
  */
 export async function executeSqldef(
   command: string,
-  args: string[]
+  args: string[],
+  desiredSql?: string
 ): Promise<string> {
   const { spawn } = await import("child_process");
   const { platform, arch } = process;
+  const { existsSync } = await import("fs");
+  const { fileURLToPath } = await import("url");
+  const { dirname, join } = await import("path");
 
   // Map Node.js platform to sqldef platform names
   let os: string;
@@ -116,18 +121,68 @@ export async function executeSqldef(
   }
 
   // Get path to the binary
-  const { fileURLToPath } = await import("url");
-  const { dirname, join, resolve } = await import("path");
-
   const __dirname = dirname(fileURLToPath(import.meta.url));
-  const packageDir = resolve(__dirname, "../../..");
-  const binPath = join(
-    packageDir,
+
+  // Try to find the binary in the following locations:
+  // 1. First, check in the platform-specific package
+  // 2. Then, check in the main package's bin directory
+  // 3. Finally, check in the node_modules/.bin directory
+
+  // Path to platform-specific binary
+  const platformBinPath = join(
+    __dirname,
+    "../../..",
+    "node_modules",
+    `@sqldef/${command}-${os}-${sqldefArch}`,
+    "bin",
+    os === "windows" ? `${command}.exe` : command
+  );
+
+  // Path to main package binary
+  const mainPackageBinPath = join(
+    __dirname,
+    "../../..",
+    "node_modules",
+    `@sqldef/${command}`,
+    "bin",
+    os === "windows" ? `${command}.exe` : command
+  );
+
+  // Path to node_modules/.bin binary
+  const nodeModulesBinPath = join(
+    __dirname,
+    "../../..",
+    "node_modules",
+    ".bin",
+    os === "windows" ? `${command}.exe` : command
+  );
+
+  // Path for development environment
+  const devBinPath = join(
+    __dirname,
+    "../../..",
     "packages",
     `${command}-${os}-${sqldefArch}`,
     "bin",
-    command
+    os === "windows" ? `${command}.exe` : command
   );
+
+  // Choose the first path that exists
+  let binPath: string;
+  if (existsSync(platformBinPath)) {
+    binPath = platformBinPath;
+  } else if (existsSync(mainPackageBinPath)) {
+    binPath = mainPackageBinPath;
+  } else if (existsSync(nodeModulesBinPath)) {
+    binPath = nodeModulesBinPath;
+  } else if (existsSync(devBinPath)) {
+    binPath = devBinPath;
+  } else {
+    throw new Error(
+      `Could not find ${command} binary for ${os}-${sqldefArch}. ` +
+        `Looked in: ${platformBinPath}, ${mainPackageBinPath}, ${nodeModulesBinPath}, ${devBinPath}`
+    );
+  }
 
   return new Promise((resolve, reject) => {
     const child = spawn(binPath, args);
@@ -157,11 +212,7 @@ export async function executeSqldef(
     });
 
     // If desiredSql is provided, write it to stdin
-    const desiredSqlIndex = args.indexOf("--desiredSql");
-    if (desiredSqlIndex !== -1 && desiredSqlIndex < args.length - 1) {
-      const desiredSql = args[desiredSqlIndex + 1];
-      // Remove the --desiredSql and its value from args
-      args.splice(desiredSqlIndex, 2);
+    if (desiredSql) {
       child.stdin.write(desiredSql);
       child.stdin.end();
     }

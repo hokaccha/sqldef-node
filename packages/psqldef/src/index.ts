@@ -11,7 +11,7 @@ export const psqldef = {
    */
   async apply(options: ApplyOptions): Promise<string> {
     const args = buildApplyArgs(options);
-    return executeSqldef("psqldef", args);
+    return executeSqldef("psqldef", args, options.desiredSql);
   },
 
   /**
@@ -74,9 +74,6 @@ function buildApplyArgs(options: ApplyOptions): string[] {
   }
 
   args.push(options.database);
-
-  // Add desiredSql as a special argument that will be handled by executeSqldef
-  args.push("--desiredSql", options.desiredSql);
 
   return args;
 }

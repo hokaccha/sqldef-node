@@ -1,0 +1,27 @@
+{
+  "name": "@sqldef/psqldef-windows-amd64",
+  "version": "0.0.1",
+  "description": "psqldef binary for windows-amd64",
+  "os": ["win32"],
+  "cpu": ["x64"],
+  "files": [
+    "bin/psqldef.exe"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hokaccha/sqldef-node.git"
+  },
+  "keywords": [
+    "sqldef",
+    "psqldef",
+    "postgresql",
+    "postgres",
+    "migration"
+  ],
+  "author": "hokaccha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hokaccha/sqldef-node/issues"
+  },
+  "homepage": "https://github.com/hokaccha/sqldef-node#readme"
+}

@@ -16,6 +16,17 @@ import * as tar from "tar";
 // Define the targets
 const TARGETS = ["psqldef", "mysqldef", "sqlite3def", "mssqldef"];
 
+// Define all supported platforms
+const ALL_PLATFORMS = [
+  { os: "darwin", arch: "amd64", ext: "zip" },
+  { os: "darwin", arch: "arm64", ext: "zip" },
+  { os: "linux", arch: "386", ext: "tar.gz" },
+  { os: "linux", arch: "amd64", ext: "tar.gz" },
+  { os: "linux", arch: "arm", ext: "tar.gz" },
+  { os: "linux", arch: "arm64", ext: "tar.gz" },
+  { os: "windows", arch: "amd64", ext: "zip" },
+];
+
 type DownloadOptions = {
   version: string;
   platform?: string;
@@ -182,6 +193,38 @@ async function verifyBinary(binPath: string): Promise<void> {
 }
 
 /**
+ * Check if the platform is the current platform
+ */
+function isCurrentPlatform(platform: PlatformInfo): boolean {
+  const currentOs = os.platform();
+  const currentArch = os.arch();
+
+  let osMatches = false;
+  let archMatches = false;
+
+  // Check if OS matches
+  if (
+    (currentOs === "darwin" && platform.os === "darwin") ||
+    (currentOs === "win32" && platform.os === "windows") ||
+    (currentOs === "linux" && platform.os === "linux")
+  ) {
+    osMatches = true;
+  }
+
+  // Check if architecture matches
+  if (
+    (currentArch === "x64" && platform.arch === "amd64") ||
+    (currentArch === "arm64" && platform.arch === "arm64") ||
+    (currentArch === "arm" && platform.arch === "arm") ||
+    (currentArch === "ia32" && platform.arch === "386")
+  ) {
+    archMatches = true;
+  }
+
+  return osMatches && archMatches;
+}
+
+/**
  * Download and install a specific sqldef binary
  */
 async function downloadTarget(
@@ -220,15 +263,43 @@ async function downloadTarget(
     // Ensure the bin directory exists
     await fs.mkdir(binDir, { recursive: true });
 
+    // Determine source and destination file names
+    // Windows binaries have .exe extension
+    const sourceFileName = platform.os === "windows" ? `${target}.exe` : target;
+    const destFileName = platform.os === "windows" ? `${target}.exe` : target;
+
+    // Check if the source file exists
+    try {
+      await fs.access(path.join(tempDir, sourceFileName));
+    } catch (error) {
+      console.error(
+        `Source file ${path.join(tempDir, sourceFileName)} does not exist`
+      );
+      // List directory contents for debugging
+      const files = await fs.readdir(tempDir);
+      console.error(`Files in temp directory: ${files.join(", ")}`);
+      throw error;
+    }
+
     // Move the binary to the bin directory
-    const binPath = path.join(binDir, target);
-    await fs.copyFile(path.join(tempDir, target), binPath);
+    const binPath = path.join(binDir, destFileName);
+    await fs.copyFile(path.join(tempDir, sourceFileName), binPath);
 
-    // Make the binary executable
-    await makeExecutable(binPath);
+    // Make the binary executable (not needed for Windows)
+    if (platform.os !== "windows") {
+      await makeExecutable(binPath);
+    }
 
-    // Verify the binary works
-    await verifyBinary(binPath);
+    // Only verify the binary if it's for the current platform
+    const isCurrent = isCurrentPlatform(platform);
+    if (isCurrent) {
+      // Verify the binary works
+      await verifyBinary(binPath);
+    } else {
+      console.log(
+        `Skipping verification for ${target} on ${platform.os}/${platform.arch} (not current platform)`
+      );
+    }
 
     console.log(
       `Successfully installed ${target} v${version} for ${platform.os}/${platform.arch}`
@@ -273,27 +344,54 @@ async function main() {
 
   console.log("Downloading sqldef binaries...");
   console.log(`Version: ${options.version}`);
-  console.log(`Platform: ${options.platform || "auto-detect"}`);
+  console.log(`Platform: ${options.platform || "all platforms"}`);
   console.log(`Targets: ${options.target?.join(", ") || "all"}`);
-
-  const platform = getPlatformInfo(options.platform);
-  console.log(
-    `Detected platform: ${platform.os}/${platform.arch} (${platform.ext})`
-  );
 
   const targets = options.target || TARGETS;
 
-  for (const target of targets) {
-    if (!TARGETS.includes(target)) {
-      console.warn(`Unknown target: ${target}, skipping`);
-      continue;
-    }
+  // If platform is specified, download for that platform only
+  if (options.platform) {
+    const platform = getPlatformInfo(options.platform);
+    console.log(
+      `Detected platform: ${platform.os}/${platform.arch} (${platform.ext})`
+    );
 
-    try {
-      await downloadTarget(target, options.version, platform);
-    } catch (error) {
-      console.error(`Failed to download ${target}: ${error}`);
-      process.exit(1);
+    for (const target of targets) {
+      if (!TARGETS.includes(target)) {
+        console.warn(`Unknown target: ${target}, skipping`);
+        continue;
+      }
+
+      try {
+        await downloadTarget(target, options.version, platform);
+      } catch (error) {
+        console.error(`Failed to download ${target}: ${error}`);
+        process.exit(1);
+      }
+    }
+  } else {
+    // If no platform is specified, download for all platforms
+    console.log("Downloading for all supported platforms");
+
+    for (const target of targets) {
+      if (!TARGETS.includes(target)) {
+        console.warn(`Unknown target: ${target}, skipping`);
+        continue;
+      }
+
+      for (const platform of ALL_PLATFORMS) {
+        try {
+          console.log(
+            `Processing ${target} for ${platform.os}/${platform.arch}`
+          );
+          await downloadTarget(target, options.version, platform);
+        } catch (error) {
+          console.error(
+            `Failed to download ${target} for ${platform.os}/${platform.arch}: ${error}`
+          );
+          process.exit(1);
+        }
+      }
     }
   }
 

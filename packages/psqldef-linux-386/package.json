@@ -1,0 +1,27 @@
+{
+  "name": "@sqldef/psqldef-linux-386",
+  "version": "0.0.1",
+  "description": "psqldef binary for linux-386",
+  "os": ["linux"],
+  "cpu": ["ia32"],
+  "files": [
+    "bin/psqldef"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hokaccha/sqldef-node.git"
+  },
+  "keywords": [
+    "sqldef",
+    "psqldef",
+    "postgresql",
+    "postgres",
+    "migration"
+  ],
+  "author": "hokaccha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hokaccha/sqldef-node/issues"
+  },
+  "homepage": "https://github.com/hokaccha/sqldef-node#readme"
+}

@@ -27,6 +27,15 @@
   "dependencies": {
     "@sqldef/core": "0.0.1"
   },
+  "optionalDependencies": {
+    "@sqldef/psqldef-darwin-amd64": "0.0.1",
+    "@sqldef/psqldef-darwin-arm64": "0.0.1",
+    "@sqldef/psqldef-linux-386": "0.0.1",
+    "@sqldef/psqldef-linux-amd64": "0.0.1",
+    "@sqldef/psqldef-linux-arm": "0.0.1",
+    "@sqldef/psqldef-linux-arm64": "0.0.1",
+    "@sqldef/psqldef-windows-amd64": "0.0.1"
+  },
   "publishConfig": {
     "access": "public"
   },

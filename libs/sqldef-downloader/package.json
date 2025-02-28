@@ -4,13 +4,8 @@
   "description": "Downloader for sqldef binaries",
   "private": true,
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "scripts": {
     "lint:tsc": "tsc --noEmit"
-  },
-  "bin": {
-    "download-sqldef": "./dist/download-sqldef.js"
   },
   "keywords": [
     "sqldef",
@@ -19,7 +14,7 @@
     "migration",
     "downloader"
   ],
-  "author": "",
+  "author": "hokaccha",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"

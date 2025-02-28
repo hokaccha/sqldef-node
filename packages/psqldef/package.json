@@ -1,6 +1,6 @@
 {
   "name": "@sqldef/psqldef",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Node.js wrapper for psqldef, a PostgreSQL schema management tool",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -18,23 +18,22 @@
     "postgresql",
     "postgres"
   ],
-  "author": "",
+  "author": "hokaccha",
   "license": "MIT",
   "files": [
-    "dist",
-    "bin"
+    "dist"
   ],
   "dependencies": {
-    "@sqldef/core": "0.0.1"
+    "@sqldef/core": "0.0.2"
   },
   "optionalDependencies": {
-    "@sqldef/psqldef-darwin-amd64": "0.0.1",
-    "@sqldef/psqldef-darwin-arm64": "0.0.1",
-    "@sqldef/psqldef-linux-386": "0.0.1",
-    "@sqldef/psqldef-linux-amd64": "0.0.1",
-    "@sqldef/psqldef-linux-arm": "0.0.1",
-    "@sqldef/psqldef-linux-arm64": "0.0.1",
-    "@sqldef/psqldef-windows-amd64": "0.0.1"
+    "@sqldef/psqldef-darwin-amd64": "0.0.2",
+    "@sqldef/psqldef-darwin-arm64": "0.0.2",
+    "@sqldef/psqldef-linux-386": "0.0.2",
+    "@sqldef/psqldef-linux-amd64": "0.0.2",
+    "@sqldef/psqldef-linux-arm": "0.0.2",
+    "@sqldef/psqldef-linux-arm64": "0.0.2",
+    "@sqldef/psqldef-windows-amd64": "0.0.2"
   },
   "publishConfig": {
     "access": "public"

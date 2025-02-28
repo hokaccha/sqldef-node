@@ -1,6 +1,6 @@
 {
   "name": "sqldef-node",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Node.js wrapper for sqldef, a database schema management tool written in Go",
   "private": true,
   "workspaces": [
@@ -14,7 +14,11 @@
     "lint:eslint": "eslint .",
     "lint:tsc": "npm run lint:tsc --workspaces --if-present",
     "format": "prettier --write .",
-    "download": "tsx libs/sqldef-downloader"
+    "download": "tsx libs/sqldef-downloader",
+    "publish-packages": "npm run build && npm publish --workspaces --filter=./packages/* --access=public",
+    "version-packages": "npm version --workspaces --filter=./packages/*",
+    "add-publish-config": "tsx scripts/add-publish-config.js",
+    "update-versions": "tsx scripts/update-versions.js"
   },
   "keywords": [
     "sqldef",

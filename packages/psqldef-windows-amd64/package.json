@@ -1,9 +1,13 @@
 {
   "name": "@sqldef/psqldef-windows-amd64",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "psqldef binary for windows-amd64",
-  "os": ["win32"],
-  "cpu": ["x64"],
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
   "files": [
     "bin/psqldef.exe"
   ],
@@ -23,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/hokaccha/sqldef-node/issues"
   },
-  "homepage": "https://github.com/hokaccha/sqldef-node#readme"
+  "homepage": "https://github.com/hokaccha/sqldef-node#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }

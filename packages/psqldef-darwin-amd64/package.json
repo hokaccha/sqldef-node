@@ -1,9 +1,13 @@
 {
   "name": "@sqldef/psqldef-darwin-amd64",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "psqldef binary for darwin-amd64",
-  "os": ["darwin"],
-  "cpu": ["x64"],
+  "os": [
+    "darwin"
+  ],
+  "cpu": [
+    "x64"
+  ],
   "files": [
     "bin/psqldef"
   ],
@@ -23,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/hokaccha/sqldef-node/issues"
   },
-  "homepage": "https://github.com/hokaccha/sqldef-node#readme"
+  "homepage": "https://github.com/hokaccha/sqldef-node#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -1,0 +1,60 @@
+---
+description: Guidelines for adding and formatting rules in the .cursor/rules directory
+globs: ["**/*"]
+alwaysApply: false
+---
+
+# Adding Rules to .cursor/rules
+
+## Overview
+
+Cursor rules help maintain consistency and enforce standards across the project. Rules are defined in `.mdc` files within the `.cursor/rules` directory and are automatically applied by Cursor's Chat and Composer features.
+
+## Rule File Format
+
+Each rule file should be saved with the `.mdc` extension in the `.cursor/rules` directory. The basic template for a rule file is:
+
+```mdc
+---
+description: Brief description of the rule's purpose
+globs: File patterns to which this rule applies
+---
+
+Content of the rule in markdown format.
+```
+
+## Frontmatter Fields
+
+- `description`: A concise explanation of the rule's purpose and what it enforces
+- `globs`: An array of file patterns (using glob syntax) to which the rule applies
+
+Example:
+```mdc
+---
+description: Ensures consistent code formatting across JavaScript files
+globs: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+---
+```
+
+## Rule Content
+
+The content section should be written in markdown format and can include:
+
+- Headings and subheadings to organize information
+- Code blocks to demonstrate examples
+- Lists for step-by-step instructions
+- Tables for structured information
+- Links to relevant documentation
+
+## Using Symbols in Rules
+
+You can reference project files and symbols in your rules, which allows for precise specification of project elements:
+
+- File references: `[filename](mdc:file:path/to/file.js)`
+- Symbol references: `[symbolName](mdc:symbol:path/to/file.js#symbolName)`
+
+This feature helps ensure rules can accurately target specific parts of the codebase.
+
+## Rule Activation
+
+Rules are automatically considered by Cursor's Chat and Composer features when working with files that match the glob patterns specified in the rule's frontmatter.

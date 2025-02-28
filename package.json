@@ -10,7 +10,8 @@
   "scripts": {
     "build": "npm run build --workspaces",
     "test": "vitest run",
-    "lint": "eslint . && npm run lint:tsc",
+    "lint": "npm run lint:eslint && npm run lint:tsc",
+    "lint:eslint": "eslint .",
     "lint:tsc": "npm run lint:tsc --workspaces",
     "format": "prettier --write .",
     "download": "tsx libs/sqldef-downloader/download-sqldef.ts"

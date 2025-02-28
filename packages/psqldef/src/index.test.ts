@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { psqldef } from "./index";
+import { psqldef } from "./index.js";
 import * as core from "@sqldef/core";
 
 // Mock the executeSqldef function

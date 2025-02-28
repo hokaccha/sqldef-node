@@ -9,7 +9,7 @@ interface DownloadOptions {
   target?: string[];
 }
 
-// 将来的に使用するため、コメントアウトしておく
+// Commented out for future use
 // const TARGETS = ["psqldef", "mysqldef", "sqlite3def", "mssqldef"];
 
 async function main() {

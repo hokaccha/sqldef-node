@@ -5,7 +5,7 @@
 /**
  * Base options for sqldef commands
  */
-export interface BaseOptions {
+export type BaseOptions = {
   /**
    * Database name
    */
@@ -26,12 +26,12 @@ export interface BaseOptions {
    * Database port
    */
   port?: number;
-}
+};
 
 /**
  * Options for apply command
  */
-export interface ApplyOptions extends BaseOptions {
+export type ApplyOptions = BaseOptions & {
   /**
    * Desired SQL schema
    */
@@ -60,12 +60,12 @@ export interface ApplyOptions extends BaseOptions {
    * YAML file to specify: target_tables, skip_tables, target_schema
    */
   config?: string;
-}
+};
 
 /**
  * Options for export command
  */
-export interface ExportOptions extends BaseOptions {}
+export type ExportOptions = BaseOptions;
 
 /**
  * Execute sqldef command

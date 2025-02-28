@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { executeSqldef } from "./index";
+import { executeSqldef } from "./index.js";
 
 describe("executeSqldef", () => {
   it("should return a placeholder implementation", async () => {

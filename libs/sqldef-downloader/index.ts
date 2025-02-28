@@ -210,7 +210,11 @@ async function downloadTarget(
     const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
     // Determine the path to the package directory
-    const packageDir = path.resolve(__dirname, "../../packages", target);
+    const packageDir = path.resolve(
+      __dirname,
+      "../../packages",
+      `${target}-${platform.os}-${platform.arch}`
+    );
     const binDir = path.join(packageDir, "bin");
 
     // Ensure the bin directory exists
@@ -226,7 +230,9 @@ async function downloadTarget(
     // Verify the binary works
     await verifyBinary(binPath);
 
-    console.log(`Successfully installed ${target} v${version}`);
+    console.log(
+      `Successfully installed ${target} v${version} for ${platform.os}/${platform.arch}`
+    );
   } catch (error) {
     console.error(`Failed to download ${target}: ${error}`);
     throw error;

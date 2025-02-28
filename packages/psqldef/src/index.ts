@@ -75,6 +75,9 @@ function buildApplyArgs(options: ApplyOptions): string[] {
 
   args.push(options.database);
 
+  // Add desiredSql as a special argument that will be handled by executeSqldef
+  args.push("--desiredSql", options.desiredSql);
+
   return args;
 }
 

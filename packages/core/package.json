@@ -1,0 +1,29 @@
+{
+  "name": "@sqldef/core",
+  "version": "0.0.1",
+  "description": "Core functionality for sqldef Node.js wrappers",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "sqldef",
+    "database",
+    "schema",
+    "migration"
+  ],
+  "author": "",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@sqldef/psqldef",
+  "version": "0.0.1",
+  "description": "Node.js wrapper for psqldef, a PostgreSQL schema management tool",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "sqldef",
+    "database",
+    "schema",
+    "migration",
+    "postgresql",
+    "postgres"
+  ],
+  "author": "",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "dependencies": {
+    "@sqldef/core": "0.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

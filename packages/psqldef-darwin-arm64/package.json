@@ -1,0 +1,27 @@
+{
+  "name": "@sqldef/psqldef-darwin-arm64",
+  "version": "0.0.1",
+  "description": "psqldef binary for darwin-arm64",
+  "os": ["darwin"],
+  "cpu": ["arm64"],
+  "files": [
+    "bin/psqldef"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hokaccha/sqldef-node.git"
+  },
+  "keywords": [
+    "sqldef",
+    "psqldef",
+    "postgresql",
+    "postgres",
+    "migration"
+  ],
+  "author": "hokaccha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hokaccha/sqldef-node/issues"
+  },
+  "homepage": "https://github.com/hokaccha/sqldef-node#readme"
+}

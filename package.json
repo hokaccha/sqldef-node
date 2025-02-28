@@ -8,11 +8,11 @@
     "libs/*"
   ],
   "scripts": {
-    "build": "npm run build --workspaces",
+    "build": "npm run build --workspaces --if-present",
     "test": "vitest run",
     "lint": "npm run lint:eslint && npm run lint:tsc",
     "lint:eslint": "eslint .",
-    "lint:tsc": "npm run lint:tsc --workspaces",
+    "lint:tsc": "npm run lint:tsc --workspaces --if-present",
     "format": "prettier --write .",
     "download": "tsx libs/sqldef-downloader"
   },
@@ -29,12 +29,17 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/extract-zip": "^2.0.0",
     "@types/node": "^20.11.0",
+    "@types/tar": "^6.1.13",
     "@types/yargs": "^17.0.33",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
     "eslint": "^8.56.0",
+    "extract-zip": "^2.0.1",
+    "node-fetch": "^3.3.2",
     "prettier": "^3.2.0",
+    "tar": "^7.4.3",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3",
     "vitest": "^1.2.0",

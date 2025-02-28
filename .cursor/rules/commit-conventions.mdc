@@ -1,0 +1,85 @@
+---
+description: Commit message conventions to ensure consistency and readability across the project
+globs: ["**/*"]
+---
+
+# Git Commit Conventions
+
+## Purpose
+- Ensure consistency and readability in commit history (primary goal)
+- Improve tracking of changes (secondary goal)
+- Streamline review processes (expected effect)
+- Eliminate quality variations in commit messages (issue to solve)
+
+## Format
+All commit messages must follow this format:
+```
+<type>: <description>
+
+[optional body]
+[optional footer(s)]
+```
+
+## Types
+Use one of the following types:
+
+| Type | Description |
+|------|-------------|
+| feat | New feature |
+| fix | Bug fix |
+| docs | Documentation changes |
+| style | Code formatting changes that do not affect meaning |
+| refactor | Code changes that neither fix bugs nor add features |
+| test | Adding or modifying tests |
+| chore | Changes to build process or auxiliary tools |
+| perf | Performance improvements |
+| ci | Changes to CI configuration files and scripts |
+| build | Changes to build system or external dependencies |
+| revert | Revert a previous commit |
+
+## Guidelines
+- Write in English
+- Use imperative mood in the description (e.g., "add" not "adds" or "added")
+- Keep the first line under 72 characters
+- Use the body to explain what and why, not how
+- Reference issues and pull requests when relevant
+
+## Examples
+
+### Good Examples
+
+```
+feat: add user authentication functionality
+
+Implement JWT-based authentication system with login and registration endpoints.
+Relates to #123
+```
+
+```
+fix: resolve database connection timeout issue
+
+Increase connection timeout from 5s to 15s to accommodate slower network conditions.
+Fixes #456
+```
+
+```
+docs: update API documentation with new endpoints
+```
+
+### Bad Examples
+
+```
+added login stuff
+```
+
+```
+Fixed bug
+```
+
+```
+Updated code
+```
+
+## Commit Verification
+
+Before submitting a pull request, ensure that all commits follow these conventions. Commits that do not follow these guidelines may need to be amended before merging.

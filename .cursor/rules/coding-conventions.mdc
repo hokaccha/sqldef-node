@@ -1,0 +1,127 @@
+---
+description: Coding conventions to ensure consistency and maintainability across the codebase
+globs: ["**/*.ts", "**/*.tsx"]
+alwaysApply: false
+---
+
+# Coding Conventions
+
+## Purpose
+- Ensure consistency across the codebase
+- Improve code readability and maintainability
+- Simplify onboarding for new contributors
+- Reduce cognitive load when switching between different parts of the codebase
+
+## Comments
+
+### Language
+- All comments must be written in English
+- This includes:
+  - Documentation comments (`/** */`)
+  - Inline comments (`//`)
+  - Block comments (`/* */`)
+  - JSDoc comments
+  - TODO comments
+
+## TypeScript Type Definitions
+
+### Use Type Aliases Instead of Interfaces
+- Always use `type` instead of `interface` for type definitions
+- This ensures consistency and avoids confusion about when to use each
+
+### Examples
+
+```typescript
+// GOOD
+type User = {
+  id: string;
+  name: string;
+  email: string;
+};
+
+// BAD
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+```
+
+### Exception Cases
+- When extending types, use intersection types:
+
+```typescript
+// GOOD
+type BaseOptions = {
+  database: string;
+};
+
+type ExtendedOptions = BaseOptions & {
+  additionalOption: string;
+};
+
+// BAD
+interface BaseOptions {
+  database: string;
+}
+
+interface ExtendedOptions extends BaseOptions {
+  additionalOption: string;
+}
+```
+
+## Function Declarations
+
+### Prefer Arrow Functions for Variables
+- Use arrow functions when assigning functions to variables
+- Use regular function declarations for standalone functions
+
+```typescript
+// GOOD
+const processData = (data: string): string => {
+  return data.trim();
+};
+
+// For standalone functions
+function validateInput(input: string): boolean {
+  return input.length > 0;
+}
+```
+
+## Error Handling
+
+### Always Use Typed Errors
+- Ensure errors are properly typed
+- Avoid throwing generic Error objects
+
+```typescript
+// GOOD
+type DatabaseError = {
+  code: string;
+  message: string;
+};
+
+throw new Error('Database connection failed') as DatabaseError;
+
+// BAD
+throw new Error('Database connection failed');
+```
+
+## Imports and Exports
+
+### Order of Imports
+- Group imports in the following order, separated by a blank line:
+  1. External libraries
+  2. Internal modules
+  3. Type imports
+
+```typescript
+// GOOD
+import fs from 'fs';
+import path from 'path';
+
+import { executeCommand } from '../utils/command';
+import { logger } from '../utils/logger';
+
+import type { CommandOptions } from '../types';
+```
